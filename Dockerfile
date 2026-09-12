@@ -55,7 +55,7 @@ RUN chown -R steam:steam ${STEAMAPPDIR}
 RUN set -x \
   && mkdir -p /home/steam/.steam/sdk64 \
 	&& chown -R steam:steam /home/steam/.steam \
-	&& ln -s ${STEAMAPPDIR}/steamclient.so /home/steam/.steam/sdk64/steamclient.so
+	&& ln -s ${STEAMAPPDIR}/linux64/steamclient.so /home/steam/.steam/sdk64/steamclient.so
 
 # Create Multiplayer save directory for volume mount
 ENV BAR_MULTIPLAYER_SAVE_DIR "/home/steam/.local/share/Daedalic Entertainment GmbH/Barotrauma/Multiplayer"
