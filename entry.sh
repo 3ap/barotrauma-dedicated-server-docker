@@ -78,7 +78,7 @@ echo \
 
 IFS=$";"
 for client_permission in ${BAR_PERMISSIONS}; do
-    IFS=$":"
+    IFS=$"#"
     client_permission_terms=($client_permission)
 
     name=${client_permission_terms[0]}
