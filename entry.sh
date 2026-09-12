@@ -86,7 +86,7 @@ for client_permission in ${BAR_PERMISSIONS}; do
     permissions=${client_permission_terms[2]}
     commands=${client_permission_terms[3]}
 
-    echo "  <Client name=\"${name}\" steamid=\"${steamid}\" permissions=\"${permissions}\">" >>"$CLIENT_PERMISSIONS_XML"
+    echo "  <Client name=\"${name}\" accountid=\"${steamid}\" permissions=\"${permissions}\">" >>"$CLIENT_PERMISSIONS_XML"
 
     IFS=$","
     for command in ${commands}; do
