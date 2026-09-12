@@ -18,14 +18,34 @@ ENV HOME=/home/steam
 ENV USER=steam
 
 # steamcmd/steamcmd already ships steamcmd and the required runtime, so we
-# just need to install the game
-RUN steamcmd \
-    @ShutdownOnFailedCommand \
-    @NoPromptForPassword \
-    +force_install_dir ${STEAMAPPDIR} \
-    +login anonymous \
-    +app_update ${STEAMAPPID} validate \
-    +quit
+# just need to install the game. steamcmd occasionally fails with
+# "Missing configuration" for no clear reason, so retry a few times when
+# that specific error happens.
+RUN set -euxo pipefail; \
+    attempt=0; \
+    max_attempts=50; \
+    while true; do \
+        attempt=$((attempt+1)); \
+        if steamcmd \
+            @ShutdownOnFailedCommand \
+            @NoPromptForPassword \
+            +force_install_dir ${STEAMAPPDIR} \
+            +login anonymous \
+            +app_update ${STEAMAPPID} validate \
+            +quit 2>&1 | tee /tmp/steamcmd.log; then \
+            break; \
+        fi; \
+        if ! grep -q "Failed to install app '1026340' (Missing configuration)" /tmp/steamcmd.log; then \
+            echo "steamcmd failed with an unexpected error (attempt $attempt), aborting"; \
+            exit 1; \
+        fi; \
+        if [ "$attempt" -ge "$max_attempts" ]; then \
+            echo "steamcmd failed with 'Missing configuration' after $max_attempts attempts, aborting"; \
+            exit 1; \
+        fi; \
+        echo "steamcmd failed with 'Missing configuration' (attempt $attempt/$max_attempts), retrying..."; \
+        sleep 2; \
+    done
 
 # steamcmd ran as root, so the game files it installed are root-owned; hand
 # them over to steam, which is what actually runs the server
