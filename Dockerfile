@@ -27,6 +27,10 @@ RUN steamcmd \
     +app_update ${STEAMAPPID} validate \
     +quit
 
+# steamcmd ran as root, so the game files it installed are root-owned; hand
+# them over to steam, which is what actually runs the server
+RUN chown -R steam:steam ${STEAMAPPDIR}
+
 # Create directory to hold steamclient.so symlink
 RUN set -x \
   && mkdir -p /home/steam/.steam/sdk64 \
