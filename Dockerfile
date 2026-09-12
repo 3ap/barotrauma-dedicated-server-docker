@@ -11,6 +11,12 @@ ENV STEAMAPPDIR /home/steam/barotrauma-dedicated
 # Create steam user
 RUN useradd --create-home --shell /bin/bash steam
 
+# The base image hardcodes HOME=/root for everything, which breaks the
+# steam user once we switch to it further down (e.g. Steam API looks for
+# steamclient.so under $HOME)
+ENV HOME=/home/steam
+ENV USER=steam
+
 # steamcmd/steamcmd already ships steamcmd and the required runtime, so we
 # just need to install the game
 RUN steamcmd \
