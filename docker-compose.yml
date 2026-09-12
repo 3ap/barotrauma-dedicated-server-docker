@@ -1,0 +1,15 @@
+services:
+  barotrauma:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "27015:27015/udp"
+      - "27016:27016/udp"
+    volumes:
+      - "./saves:/home/steam/.local/share/Daedalic Entertainment GmbH/Barotrauma/Multiplayer"
+    environment:
+      - BAR_PASSWORD=changeme1
+      - BAR_NAME=ServerName
+      - BAR_PUBLIC=False
+      - BAR_PERMISSIONS=ingame#STEAM_1:1:12345678#All
