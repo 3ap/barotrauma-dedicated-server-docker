@@ -64,7 +64,7 @@ sed -i "s/ServerName=.*/ServerName=\"${BAR_NAME}\"/" "${SETTINGS_XML}"
 sed -i "s/ServerMessageText=.*/ServerMessageText=\"${BAR_SERVERMESSAGE}\"/" "${SETTINGS_XML}"
 sed -i "s/StartWhenClientsReady=.*/StartWhenClientsReady=\"${BAR_START_WHEN_CLIENTS_READY}\"/" "${SETTINGS_XML}"
 sed -i "s/StartWhenClientsReadyRatio=.*/StartWhenClientsReadyRatio=\"${BAR_START_WHEN_CLIENTS_READY_RATIO}\"/" "${SETTINGS_XML}"
-sed -i "s/IsPublic=.*/IsPublic=\"true\"/" "${SETTINGS_XML}"
+sed -i "s/IsPublic=.*/IsPublic=\"${BAR_IS_PUBLIC}\"/" "${SETTINGS_XML}"
 
 # Create client Permissions
 # <Name>:<SteamID>:<Permissions>:<Commands>
